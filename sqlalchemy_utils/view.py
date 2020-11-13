@@ -12,7 +12,7 @@ class CreateView(DDLElement):
 
 @compiler.compiles(CreateView)
 def compile_create_materialized_view(element, compiler, **kw):
-    return 'CREATE {}VIEW {} AS {}'.format(
+    return 'CREATE {}VIEW IF NOT EXISTS {} AS {}'.format(
         'MATERIALIZED ' if element.materialized else '',
         element.name,
         compiler.sql_compiler.process(element.selectable, literal_binds=True),
